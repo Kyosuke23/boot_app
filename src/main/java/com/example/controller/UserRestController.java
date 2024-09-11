@@ -1,4 +1,4 @@
-package com.example.rest;
+package com.example.controller;
 
 import java.util.HashMap;
 import java.util.List;
@@ -24,6 +24,7 @@ import com.example.form.GroupOrder;
 import com.example.form.SignupForm;
 import com.example.form.UserDetailForm;
 import com.example.form.UserListForm;
+import com.example.rest.RestResult;
 
 @RestController
 @RequestMapping("/user")
