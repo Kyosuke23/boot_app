@@ -44,6 +44,24 @@ public class UserDetailController {
 	}
 	
 	/**
+	 * ユーザー情報を取得
+	 * <p>REST用ページ</p>
+	 * @param form
+	 * @param model
+	 * @param userId
+	 * @return
+	 */
+	@GetMapping("/rest/detail/{userId}")
+	public String getUserRest(UserDetailForm form, Model model, @PathVariable("userId") String userId) {
+		MUser user = this.userService.getUserByUserId(userId);
+		user.setPassword(null);
+		form = this.modelMapper.map(user, UserDetailForm.class);
+		form.setSalaryList(user.getSalaryList());
+		model.addAttribute("userDetailForm", form);
+		return "user_rest/detail";
+	}
+	
+	/**
 	 * ユーザー情報の更新処理
 	 * @param form
 	 * @param model
