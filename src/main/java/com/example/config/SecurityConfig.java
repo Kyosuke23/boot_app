@@ -41,7 +41,7 @@ public class SecurityConfig {
 				.failureUrl("/login?error") // ログイン失敗時の遷移先
 				.usernameParameter("userId") // ログインページのユーザーID
 				.passwordParameter("password") // ログインページのパスワード
-				.defaultSuccessUrl("/user/list", true) // ログイン成功後の遷移先
+				.defaultSuccessUrl("/top", true) // ログイン成功後の遷移先
 		// ログアウト設定
 		).logout(logout -> logout
 				.logoutRequestMatcher(new AntPathRequestMatcher("/logout")) // ログアウト処理のパス

@@ -29,6 +29,15 @@ public class MenuController {
 	private ModelMapper modelMapper;
 	
 	/**
+	 * アドミン権限専用画面を表示
+	 * @return アドミン権限専用画面
+	 */
+	@GetMapping("/top")
+	public String getTop() {
+		return "top/top";
+	}
+	
+	/**
 	 * ユーザーリスト画面を表示
 	 * @param form
 	 * @param model
