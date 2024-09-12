@@ -24,6 +24,6 @@ INSERT INTO m_user(user_id, password, user_name, birthday, age, gender, departme
 INSERT INTO m_department(department_id, department_name) values (1, 'システム管理部');
 INSERT INTO m_department(department_id, department_name) values (2, '営業部管理部');
 
-INSERT INTO t_salary(user_id, year_month, salary) values ('ikeda', '2020/11', 280000);
-INSERT INTO t_salary(user_id, year_month, salary) values ('ikeda', '2020/12', 290000);
-INSERT INTO t_salary(user_id, year_month, salary) values ('ikeda', '2021/01', 300000);
+INSERT INTO t_salary(user_id, salary_ym, salary) values ('ikeda', '2020/11', 280000);
+INSERT INTO t_salary(user_id, salary_ym, salary) values ('ikeda', '2020/12', 290000);
+INSERT INTO t_salary(user_id, salary_ym, salary) values ('ikeda', '2021/01', 300000);

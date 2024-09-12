@@ -6,6 +6,6 @@ import lombok.Data;
 public class Salary {
 
 	private String userId;
-	private String yearMonth;
+	private String salaryYm;
 	private Integer salary;
 }

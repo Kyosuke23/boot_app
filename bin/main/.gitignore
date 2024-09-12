@@ -1,3 +1,7 @@
-/templates/
-/static/
+/application.properties
 /com/
+/db/
+/il8n/
+/mapper/
+/static/
+/templates/

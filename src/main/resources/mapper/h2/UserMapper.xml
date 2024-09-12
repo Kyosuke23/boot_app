@@ -19,7 +19,7 @@
 	</resultMap>
 	<resultMap type="com.example.domain.user.model.Salary" id="salary">
 		<result column="user_id" property="userId"/>
-		<result column="year_month" property="yearMonth"/>
+		<result column="salary_ym" property="salaryYm"/>
 		<result column="salary" property="salary"/>
 	</resultMap>
 	<select id="count" resultType="Long">
@@ -68,7 +68,7 @@
 			, t2.department_id
 			, t2.department_name
 			, t3.user_id as salary_user_id
-			, t3.year_month as salary_year_month
+			, t3.salary_ym as salary_salary_Ym
 			, t3.salary as salary_salary
 		from
 			m_user t1

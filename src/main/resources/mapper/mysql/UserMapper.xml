@@ -41,7 +41,7 @@
 			user_id
 			, password
 			, user_name
-			, abs(datediff('year', current_timestamp(), birthday)) as age
+			, timestampdiff(year, birthday, curdate()) as age
 			, birthday
 			, gender
 			, department_id
@@ -63,12 +63,12 @@
 			, t1.password
 			, t1.user_name
 			, t1.birthday
-			, abs(datediff('year', current_timestamp(), birthday)) as age
+			, timestampdiff(year, birthday, curdate()) as age
 			, t1.gender
 			, t2.department_id
 			, t2.department_name
 			, t3.user_id as salary_user_id
-			, t3.salary_ym as salary_salary_Ym
+			, t3.salary_ym as salary_salary_ym
 			, t3.salary as salary_salary
 		from
 			m_user t1
