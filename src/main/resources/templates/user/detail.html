@@ -3,7 +3,7 @@
  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
 <head>
 	<title>ユーザー詳細</title>
-	<link rel="stylesheet" th:href="@{/css/user/list.css}">
+	<link rel="stylesheet" th:href="@{/css/user/detail.css}">
 	<script th:src="@{/js/user/detail.js}" defer></script>
 </head>
 <body>
@@ -13,7 +13,7 @@
 		</div>
 		<!-- ユーザー詳細情報 -->
 		<form id="user-detail-form" method="post" th:action="@{/user/detail}" class="form-signup" th:object="${userDetailForm}">
-			<input type="hidden" th:field="*{userId}" />
+			<input type="hidden" th:field="*{userId}"/>
 			<table class="table table-striped table-bordered table-hover">
 				<tbody>
 					<tr>
