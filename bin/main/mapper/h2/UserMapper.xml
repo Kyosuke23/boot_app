@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.repository.UserMapper">
+	<resultMap type="com.example.domain.user.model.MUser" id="user">
+		<id column="user_id" property="userId"/>
+		<result column="password" property="password"/>
+		<result column="user_name" property="userName"/>
+		<result column="age" property="age"/>
+		<result column="birthday" property="birthday"/>
+		<result column="gender" property="gender"/>
+		<result column="department_id" property="departmentId"/>
+		<result column="role" property="role"/>
+		<association property="department" resultMap="department"/>
+		<collection property="salaryList" resultMap="salary" columnPrefix="salary_" />
+	</resultMap>
+	<resultMap type="com.example.domain.user.model.Department" id="department">
+		<result column="department_id" property="departmentId"/>
+		<result column="department_name" property="departmentName"/>
+	</resultMap>
+	<resultMap type="com.example.domain.user.model.Salary" id="salary">
+		<result column="user_id" property="userId"/>
+		<result column="year_month" property="yearMonth"/>
+		<result column="salary" property="salary"/>
+	</resultMap>
+	<select id="count" resultType="Long">
+		select
+			count(user_id)
+		from
+			m_user
+		where
+			deleted_flg != '1'
+		<if test="userId != null">
+			and user_id like '%' || #{userId} || '%'
+		</if>
+		<if test="userName != null">
+			and user_name like '%' || #{userName} || '%'
+		</if>
+	</select>
+	<select id="findMany" resultType="MUser">
+		select
+			user_id
+			, password
+			, user_name
+			, abs(datediff('year', current_timestamp(), birthday)) as age
+			, birthday
+			, gender
+			, department_id
+			, role
+		from
+			m_user
+		where
+			deleted_flg != '1'
+		<if test="userId != null">
+			and user_id like '%' || #{userId} || '%'
+		</if>
+		<if test="userName != null">
+			and user_name like '%' || #{userName} || '%'
+		</if>
+	</select>
+	<select id="findByUserId" resultMap="user">
+		select
+			t1.user_id
+			, t1.password
+			, t1.user_name
+			, t1.birthday
+			, abs(datediff('year', current_timestamp(), birthday)) as age
+			, t1.gender
+			, t2.department_id
+			, t2.department_name
+			, t3.user_id as salary_user_id
+			, t3.year_month as salary_year_month
+			, t3.salary as salary_salary
+		from
+			m_user t1
+		left outer join
+			m_department t2
+		on t1.department_id = t2.department_id
+		left outer join
+			t_salary t3
+		on t1.user_id = t3.user_id
+		where
+			t1.deleted_flg != '1'
+		and	t1.user_id = #{userId}
+	</select>
+	<select id="findLoginUser" resultType="MUser">
+		select
+			*
+		from
+			m_user
+		where
+			user_id = #{userId}
+	</select>
+	<insert id="insertOne">
+		insert into m_user(
+			user_id
+			, password
+			, user_name
+			, birthday
+			, gender
+			, department_id
+			, role
+		) values (
+			#{userId}
+			, #{password}
+			, #{userName}
+			, #{birthday}
+			, #{gender}
+			, #{departmentId}
+			, #{role}
+		)
+	</insert>
+	<update id="updateByUserId">
+		update
+			m_user
+		set
+			password = #{password}
+			, user_name = #{userName}
+		where
+			user_id = #{userId}
+	</update>
+	<update id="logicalDeleteByUserId">
+		update
+			m_user
+		set
+			deleted_flg = '1'
+		where
+			user_id = #{userId}
+	</update>
+	<delete id="fisicalDeleteByUserId">
+		delete from
+			m_user
+		where
+			user_id = #{userId}
+	</delete>
+</mapper>

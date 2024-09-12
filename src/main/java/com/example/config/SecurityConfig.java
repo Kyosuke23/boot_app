@@ -52,6 +52,7 @@ public class SecurityConfig {
 				.requestMatchers("/webjars/**").permitAll()
 				.requestMatchers("/css/**").permitAll()
 				.requestMatchers("/js/**").permitAll()
+				.requestMatchers("/img/**").permitAll()
 				.requestMatchers("/login").permitAll()
 				.requestMatchers("/user/signup").permitAll()
 				.requestMatchers("/user/signup/rest").permitAll()

@@ -5,10 +5,10 @@
 <head>
 </head>
 <body>
-	<nav layout:fragment="menu" class="bg-light">
-		<ul class="list-unstyled">
-			<li role="presentation">
-				<a class="nav-link" th:href="@{/user/list}">ユーザーリスト</a>
+	<nav layout:fragment="menu" class="nav-bar">
+		<ul class="navbar-nav">
+			<li class="nav-item" role="presentation">
+				<a class="nav-link" ria-current="page" th:href="@{/user/list}">ユーザーリスト</a>
 			</li>
 			<li role="presentation">
 				<a class="nav-link" th:href="@{/user/list/rest}">ユーザーリスト(REST)</a>

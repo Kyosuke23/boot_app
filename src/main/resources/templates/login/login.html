@@ -9,26 +9,33 @@
 	<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}" defer></script>
 	<title>ログイン</title>
 </head>
-<body class="bg-light">
-	<div class="text-center">
-		<form method="post" th:action="@{/login}" class="form-login">
-			<h2>ログイン</h2>
+<body class="d-flex align-items-center py-4 bg-body-tertiary bg-light">
+	<main class="form-signin w-100 m-auto">
+		<form class="text-center" method="post" th:action="@{/login}">
+			<img class="mb-4" th:src="@{/img/login/bootstrap-logo.svg}" alt="" width="72" height="57" loading="lazy">
+			<h1 class="h3 mb-3 fw-normal">サインインして下さい</h1>
 			<p th:if="${session['SPRING_SECURITY_LAST_EXCEPTION']} != null" th:text="${session['SPRING_SECURITY_LAST_EXCEPTION'].message}" class="text-danger">
 				ログインエラーメッセージ
 			</p>
-			<!-- ユーザーID -->
-			<div class="form-group">
-				<label for="userId" class="sr-only">userId</label>
-				<input type="text" class="form-control" placeholder="ユーザーID" name="userId" />
+			<div class="form-floating">
+				<input type="text" class="form-control" id="floatingInput" name="userId">
+				<label for="userId">ユーザーID</label>
 			</div>
-			<!-- パスワード -->
-			<div class="form-group">
-				<label for="password" class="sr-only">password</label>
-				<input type="password" class="form-control" placeholder="パスワード" name="password" />
+			<div class="form-floating">
+				<input type="password" class="form-control" id="floatingPassword" name="password">
+				<label for="password">パスワード</label>
 			</div>
-			<input type="submit" value="ログイン" class="btn btn-primary" />
+			
+			<div class="form-check text-start my-3">
+				<input class="form-check-input" type="checkbox" value="remember-me" id="flexCheckDefault">
+				<label class="form-check-label" for="flexCheckDefault">
+					状態を記憶する
+				</label>
+			</div>
+			<button class="btn btn-primary w-100 py-2 my-3" type="submit">サインイン</button>
+			<a th:href="@{/user/signup}">新規登録はこちら</a>
+			<p class="mt-5 mb-3 text-body-secondary">&copy; 2024-2024</p>
 		</form>
-		<a th:href="@{/user/signup}">新規登録はこちら</a>
-	</div>
+	</main>
 </body>
 </html>

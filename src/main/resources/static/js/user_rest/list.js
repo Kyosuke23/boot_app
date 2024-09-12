@@ -39,10 +39,10 @@ function createDataTables() {
 	
 	table = $('#user-list-table').DataTable({
 		language: {
-			url: '/webjars/datatables-plugins/i18n/Japanese.json'
+			url: '/webjars/datatables-plugins/i18n/ja.json'
 		}
 		, bFilter: false // hidden search box
-		, aLengthMenu: [50, 100] // data length
+		, aLengthMenu: [10, 50, 100] // data length
 		, data: userData
 		, columns: [
 			{data: 'userId'}

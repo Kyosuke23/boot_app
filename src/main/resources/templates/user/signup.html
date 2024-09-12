@@ -10,8 +10,8 @@
 	<script th:src="@{/js/user/signup.js}" defer></script>
 	<title th:text="#{user.signup.title}"></title>
 </head>
-<body class="bg-light">
-	<form id="signup-form" method="post" th:action="@{/user/signup}" class="form-signup" th:object="${signupForm}">
+<body class="d-flex align-items-center py-4 bg-body-tertiary bg-light">
+	<form id="signup-form m-auto" method="post" th:action="@{/user/signup}" class="form-signin w-100 m-auto" th:object="${signupForm}">
 		<h1 class="text-center" th:text="#{user.signup.title}"></h1>
 		<!-- ユーザID -->
 		<div class="form-group">

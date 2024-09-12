@@ -1,8 +1,3 @@
-/application.properties
-/com/
-/data.sql
-/il8n/
-/mapper/
-/schema.sql
-/static/
 /templates/
+/static/
+/com/

@@ -15,16 +15,18 @@
 		</div>
 		<!-- 検索 -->
 		<div class="mb-4">
-			<form id="user-search-form" method="post" th:action="@{/user/list}" class="form-inline" th:object="${userListForm}">
-				<div class="form-group">
+			<form id="user-search-form" method="post" th:action="@{/user/list}" class="row g-3" th:object="${userListForm}">
+				<div class="col-md-1">
 					<label for="userId" class="mr-2">ユーザーID</label>
 					<input type="text" class="form-control" th:field="*{userId}" />
 				</div>
-				<div class="form-group mx-sm-3">
+				<div class="col-md-2">
 					<label for="userName" class="mr-2">ユーザー名</label>
 					<input type="text" class="form-control" th:field="*{userName}" />
 				</div>
-				<button class="btn btn-primary" type="submit">検索</button>
+				<div class="col d-flex align-items-end">
+					<button class="btn btn-primary" type="submit">検索</button>
+				</div>
 			</form>
 		</div>
 		<!-- 一覧表示 -->
