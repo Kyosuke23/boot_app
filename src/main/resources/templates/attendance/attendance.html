@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
+<head>
+	<link rel="stylesheet" th:href="@{/css/attendance/attendance.css}">
+	<script th:src="@{/js/attendance/attendance.js}" defer></script>
+	<title>勤怠管理画面</title>
+</head>
+<body>
+	<div layout:fragment="content">
+		<div class="header border-bottom mt-2">
+			<h1 class="h2">勤怠管理画面</h1>
+		</div>
+		<!-- 勤怠情報表示-->
+		<div>
+			<form method="post" th:action="@{/attendance/save/rest}" class="row g-3" th:object="${attendanceForm}">
+				<table id="result-table" class="table table-striped table-bordered table-hover table-sm">
+					<thead class="thead-light">
+						<tr>
+							<th class="th-width">曜日</th>
+							<th class="th-width">曜日</th>
+							<th class="th-width">勤務区分</th>
+							<th class="th-width">開始時刻</th>
+							<th class="th-width">終了時刻</th>
+							<th class="th-width">休憩時間</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="item, st: *{attendanceList}" th:classappend="${item.weekdayCd} == 1? table-danger: (${item.weekdayCd} == 7? table-info)">
+							<!-- 日付 -->
+							<td th:text="${#dates.format(item.attendanceDate, 'd')} + 日"></td>
+							<input type="hidden" class="date_hidden" th:field="*{attendanceList[__${st.index}__].attendanceDate}"/>
+							<!-- 曜日 -->
+							<td th:text= "${item.weekdayName}" th:field="*{attendanceList[__${st.index}__].weekdayName}"></td>
+							<input type="hidden" th:field="*{attendanceList[__${st.index}__].weekdayName}"/>
+							<input type="hidden" th:field="*{attendanceList[__${st.index}__].weekdayCd}"/>
+							<!-- 勤務区分 -->
+							<td>
+								<select class="form-select" th:field="*{attendanceList[__${st.index}__].workingTypeId}">
+									<option value="0"></option>
+									<option th:each="wt: ${workingTypeList}"
+											th:value="${wt.workingTypeId}"
+											th:text="${wt.workingTypeName}"
+											th:selected="${wt.workingTypeId} == ${item.workingTypeId}">
+									</option>
+								</select>
+							</td>
+							<!-- 開始時刻 -->
+							<td class="cs-form">
+								<input type="time" class="form-control start_time" 
+									th:value="${#strings.isEmpty(item.startTime)} ? '': *{#strings.substring(attendanceList[__${st.index}__].startTime, 11, 16)}"
+								/>
+							</td>
+							<input type="hidden" class="start_time_hidden" th:field="*{attendanceList[__${st.index}__].startTime}"/>
+							<!-- 終了時刻 -->
+							<td class="cs-form">
+								<input type="time" class="form-control end_time" 
+									th:value="${#strings.isEmpty(item.endTime)} ? '': *{#strings.substring(attendanceList[__${st.index}__].endTime, 11, 16)}"
+								/>
+							</td>
+							<input type="hidden" class="end_time_hidden" th:field="*{attendanceList[__${st.index}__].endTime}"/>
+							<!-- 休憩時間　-->
+							<td class="cs-form">
+								<input type="time" class="form-control rest_time" th:field="*{attendanceList[__${st.index}__].restTime}"/>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<div>
+					<input id="btn-save" type="submit" class="btn btn-primary mt-3 mb-5" th:value="保存"/>
+				</div>
+				<input type="hidden" th:field="*{attendanceYm}"/>
+			</form>
+		</div>
+	</div>
+</body>
+</html>

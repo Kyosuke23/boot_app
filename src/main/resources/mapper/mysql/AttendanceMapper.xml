@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.repository.AttendanceMapper">
+	<resultMap type="com.example.domain.attendance.model.Attendance" id="attendance">
+		<id column="attendance_ym" property="attendanceYm"/>
+		<id column="user_id" property="userId"/>
+		<result column="status" property="status"/>
+		<result column="attendance_date" property="attendanceDate"/>
+		<result column="weekday_cd" property="weekdayCd"/>
+		<result column="weekday_name" property="weekdayName"/>
+		<result column="working_type_id" property="workingTypeId"/>
+		<result column="start_time" property="startTime"/>
+		<result column="end_time" property="endTime"/>
+		<result column="rest_time" property="restTime"/>
+		<result column="working_time" property="workingTime"/>
+		<association property="working_type_name" resultMap="working_type"/>
+	</resultMap>
+	<resultMap type="com.example.domain.attendance.model.WorkingType" id="working_type">
+		<result column="working_type_id" property="WorkingTypeId"/>
+		<result column="working_type_name" property="WorkingTypeName"/>
+	</resultMap>
+	<select id="getAttendanceByUserId" resultType="com.example.domain.attendance.model.Attendance">
+		<![CDATA[
+			with recursive date_list (attendance_date) as (
+					select #{startDate}
+				union all
+					select date(attendance_date + interval 1 day)
+					from date_list
+					where attendance_date < #{endDate}
+			)
+			select
+				t2.user_id
+				, t2.attendance_ym
+				, t1.attendance_date
+				, dayofweek(t1.attendance_date) as weekday_cd
+				, case dayofweek(t1.attendance_date)
+					when 1 then 'Sun'
+					when 2 then 'Mon'
+					when 3 then 'Tue'
+					when 4 then 'Wed'
+					when 5 then 'Thu'
+					when 6 then 'Fri'
+					when 7 then 'Sat'
+				end as weekday_name
+				, t3.working_type_id
+				, t4.working_type_name
+				, date_format(start_time, '%Y-%m-%d %H:%i:%s') as start_time
+				, date_format(end_time, '%Y-%m-%d %H:%i:%s') as end_time
+				, t3.rest_time
+				, subtime(timediff(t3.end_time, t3.start_time), t3.rest_time) as working_time
+			from
+				date_list t1
+			left outer join
+				t_attendance t2
+			on 1 = 1
+			and t2.user_id = #{userId}
+			left outer join
+				t_attendance_detail t3
+			on t3.attendance_date = t1.attendance_date
+			and t3.deleted_flg != '1'
+			left outer join
+				m_working_type t4
+			on t4.working_type_id = t3.working_type_id
+			order by
+				t1.attendance_date asc
+		]]>
+	</select>
+	<select id="getAllWorkingType" resultType="com.example.domain.attendance.model.WorkingType">
+		<![CDATA[
+			select
+				*
+			from
+				m_working_type
+			where
+				deleted_flg != '1'
+			order by
+				working_type_id asc
+		]]>
+	</select>
+	<insert id="upsertAttendance">
+		insert into t_attendance (
+			attendance_ym
+			, user_id
+		) values (
+			#{attendanceYm}
+			, #{userId}
+		)
+        on duplicate key update
+			status = #{status}
+            , updated_at = current_timestamp();
+	</insert>
+	<insert id="upsertAttendanceDetail" parameterType="java.util.List">
+		insert into t_attendance_detail (
+			user_id
+			, attendance_date
+			, working_type_id
+            , start_time
+            , end_time
+            , rest_time
+		) values
+		<foreach collection="attendanceList" item="item" open="" separator="," close="">
+		(
+			#{userId}
+			, #{item.attendanceDate}
+			, #{item.workingTypeId}
+			, #{item.startTime}
+			, #{item.endTime}
+			, #{item.restTime}
+		)
+		</foreach>
+        on duplicate key update
+        	start_time = values(start_time)
+        	, working_type_id = values(working_type_id)
+        	, start_time = values(start_time)
+        	, end_time = values(end_time)
+        	, rest_time = values(rest_time)
+        	, updated_at = current_timestamp()
+        ;
+	</insert>
+</mapper>
