@@ -84,7 +84,7 @@ public class AttendanceController {
 		// 選択された明細行のみチェック対象とする
 		for (int i = 0; i < form.getAttendanceList().size(); i++) {
 			Attendance rec = form.getAttendanceList().get(i);
-			if (rec.getIsChecked()) {
+			if (rec.getCheckedFlg()) {
 				br.pushNestedPath("attendanceList[" + i + "]");
 				this.smartValidator.validate(rec, br);
 				br.popNestedPath();
@@ -105,9 +105,6 @@ public class AttendanceController {
 		/* 画面に返すformとDB登録するformを分けておく */
 		List<Attendance> attendanceList = form.getAttendanceList();
 		List<Attendance> insertList = new ArrayList<Attendance>(attendanceList);
-		
-		// DB登録するformを選択行のみにフィルタする
-		insertList.removeIf(item -> !item.getIsChecked());
 		
 		// 勤怠情報の登録
 		this.service.upsertAttendance(userId, attendanceYm, 0); // ヘッダー

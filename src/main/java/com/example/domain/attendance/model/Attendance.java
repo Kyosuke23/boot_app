@@ -12,7 +12,7 @@ import lombok.Data;
 public class Attendance {
 
 	// チェックボックス
-	private Boolean isChecked;
+	private Boolean checkedFlg;
 	// ユーザーID
 	private String userId;
 	// 勤怠年月

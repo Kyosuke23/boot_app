@@ -13,6 +13,7 @@
 		<result column="end_time" property="endTime"/>
 		<result column="rest_time" property="restTime"/>
 		<result column="working_time" property="workingTime"/>
+		<result column="checked_flg" property="checkedFlg"/>
 		<association property="working_type_name" resultMap="working_type"/>
 	</resultMap>
 	<resultMap type="com.example.domain.attendance.model.WorkingType" id="working_type">
@@ -97,6 +98,7 @@
             , start_time
             , end_time
             , rest_time
+            , checked_flg
 		) values
 		<foreach collection="attendanceList" item="item" open="" separator="," close="">
 		(
@@ -106,14 +108,16 @@
 			, #{item.startTime}
 			, #{item.endTime}
 			, #{item.restTime}
-		)
+			, case when #{item.checkedFlg} then 1 else 0 end
+		) as new
 		</foreach>
         on duplicate key update
-        	start_time = values(start_time)
-        	, working_type_id = values(working_type_id)
-        	, start_time = values(start_time)
-        	, end_time = values(end_time)
-        	, rest_time = values(rest_time)
+        	start_time = new.start_time
+        	, working_type_id = new.working_type_id
+        	, start_time = new.start_time
+        	, end_time = new.end_time
+        	, rest_time = new.rest_time
+        	, checked_flg = if(new.checked_flg, 1, 0)
         	, updated_at = current_timestamp()
         ;
 	</insert>

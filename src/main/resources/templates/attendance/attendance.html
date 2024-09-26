@@ -30,7 +30,7 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layo
 						<tr th:each="item, st: *{attendanceList}" th:classappend="${item.weekdayCd} == 1? table-danger: (${item.weekdayCd} == 7? table-info)">
 							<!-- チェックボックス -->
 							<td>
-								<input type="checkbox" th:field="*{attendanceList[__${st.index}__].isChecked}"/>
+								<input type="checkbox" th:field="*{attendanceList[__${st.index}__].checkedFlg}"/>
 							</td>
 							<!-- 日付 -->
 							<td th:text="${#dates.format(item.attendanceDate, 'd')} + 日"></td>
