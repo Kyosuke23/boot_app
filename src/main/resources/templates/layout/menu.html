@@ -20,7 +20,7 @@
 				<a class="nav-link" th:href="@{'/admin'}">アドミン専用</a>
 			</li>
 			<li role="presentation" sec:authorize="hasRole('ADMIN')">
-				<a class="nav-link" th:href="@{'/attendance'}">勤怠管理画面</a>
+				<a class="nav-link" th:href="@{'/attendance'}" th:text="#{attendanceManagementScreen}"></a>
 			</li>
 		</ul>
 	</nav>

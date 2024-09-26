@@ -36,7 +36,7 @@ public class AttendanceController {
 	 * <p>当月の勤怠情報を表示する</p>
 	 * @param form
 	 * @param model
-	 * @return
+	 * @return 勤怠管理画面
 	 */
 	@GetMapping("")
 	public String getAttendance(@ModelAttribute AttendanceForm form, Model model) {
@@ -50,8 +50,8 @@ public class AttendanceController {
 			LocalDate lastDate = now.withDayOfMonth(now.lengthOfMonth());
 			
 			// 日付をDBバインド用に変換
-	        String firstDateStr = firstDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-	        String lastDateStr = lastDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+			String firstDateStr = firstDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+			String lastDateStr = lastDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 	
 			// 勤怠情報を取得
 			List<Attendance> attendanceList = this.service.selectAttendanceByUserId(userId, firstDateStr, lastDateStr);
@@ -72,6 +72,13 @@ public class AttendanceController {
 		return "attendance/attendance";
 	}
 	
+	/**
+	 * 勤怠情報の保存処理
+	 * @param model
+	 * @param form
+	 * @param br
+	 * @return 勤怠管理画面
+	 */
 	@PostMapping("/save/rest")
 	public String saveAttendance(Model model, @ModelAttribute AttendanceForm form, BindingResult br) {
 		// 選択された明細行のみチェック対象とする
