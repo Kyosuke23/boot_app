@@ -13,10 +13,11 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layo
 		</div>
 		<!-- 勤怠情報表示-->
 		<div>
-			<form method="post" th:action="@{/attendance/save/rest}" class="row g-3" th:object="${attendanceForm}">
+			<form method="post" th:action="@{/attendance/save/rest}" class="row g-3 mt-1" th:object="${attendanceForm}">
 				<table id="result-table" class="table table-striped table-bordered table-hover table-sm">
 					<thead class="thead-light">
 						<tr>
+							<th class="th-width"></th>
 							<th class="th-width">日付</th>
 							<th class="th-width">曜日</th>
 							<th class="th-width">勤務区分</th>
@@ -27,6 +28,10 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layo
 					</thead>
 					<tbody>
 						<tr th:each="item, st: *{attendanceList}" th:classappend="${item.weekdayCd} == 1? table-danger: (${item.weekdayCd} == 7? table-info)">
+							<!-- チェックボックス -->
+							<td>
+								<input type="checkbox" th:field="*{attendanceList[__${st.index}__].isChecked}"/>
+							</td>
 							<!-- 日付 -->
 							<td th:text="${#dates.format(item.attendanceDate, 'd')} + 日"></td>
 							<input type="hidden" class="date_hidden" th:field="*{attendanceList[__${st.index}__].attendanceDate}"/>
@@ -47,21 +52,28 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layo
 							</td>
 							<!-- 開始時刻 -->
 							<td class="cs-form">
-								<input type="time" class="form-control start_time" 
-									th:value="${#strings.isEmpty(item.startTime)} ? '': *{#strings.substring(attendanceList[__${st.index}__].startTime, 11, 16)}"
+								<input type="time" class="form-control start_time" step="900"
+									th:classappend="*{#fields.hasErrors('attendanceList[' + __${st.index}__ + '].startTime')} ? 'is-invalid'"
+									th:value="${not #strings.isEmpty(item.startTime)} ? *{#strings.substring(attendanceList[__${st.index}__].startTime, 11, 16)}"
 								/>
+								<div class="invalid-feedback" th:errors="*{attendanceList[__${st.index}__].startTime}"></div>
 							</td>
 							<input type="hidden" class="start_time_hidden" th:field="*{attendanceList[__${st.index}__].startTime}"/>
 							<!-- 終了時刻 -->
 							<td class="cs-form">
-								<input type="time" class="form-control end_time" 
-									th:value="${#strings.isEmpty(item.endTime)} ? '': *{#strings.substring(attendanceList[__${st.index}__].endTime, 11, 16)}"
+								<input type="time" class="form-control end_time" step="900"
+									th:classappend="*{#fields.hasErrors('attendanceList[' + __${st.index}__ + '].endTime')} ? 'is-invalid'"
+									th:value="${not #strings.isEmpty(item.endTime)} ? *{#strings.substring(attendanceList[__${st.index}__].endTime, 11, 16)}"
 								/>
+								<div class="invalid-feedback" th:errors="*{attendanceList[__${st.index}__].endTime}"></div>
 							</td>
 							<input type="hidden" class="end_time_hidden" th:field="*{attendanceList[__${st.index}__].endTime}"/>
 							<!-- 休憩時間　-->
 							<td class="cs-form">
-								<input type="time" class="form-control rest_time" th:field="*{attendanceList[__${st.index}__].restTime}"/>
+								<input type="time" class="form-control rest_time" th:field="*{attendanceList[__${st.index}__].restTime}"
+									th:classappend="*{#fields.hasErrors('attendanceList[' + __${st.index}__ + '].restTime')} ? 'is-invalid'"
+								/>
+								<div class="invalid-feedback" th:errors="*{attendanceList[__${st.index}__].restTime}"></div>
 							</td>
 						</tr>
 					</tbody>
