@@ -4,7 +4,7 @@ import java.util.Date;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
@@ -32,12 +32,12 @@ public class Attendance {
 	// 勤務区分名称
 	private String workingTypeName;
 	// 開始時刻
-	@NotEmpty
+	@NotBlank
 	private String startTime;
 	// 終了時刻
-	@NotEmpty
+	@NotBlank
 	private String endTime;
-	@NotEmpty
+	@NotBlank
 	// 休憩時間
 	private String restTime;
 }
