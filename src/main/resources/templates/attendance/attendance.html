@@ -41,14 +41,16 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layo
 							<input type="hidden" th:field="*{attendanceList[__${st.index}__].weekdayCd}"/>
 							<!-- 勤務区分 -->
 							<td>
-								<select class="form-select" th:field="*{attendanceList[__${st.index}__].workingTypeId}">
-									<option value="0"></option>
+								<select class="form-select" th:field="*{attendanceList[__${st.index}__].workingTypeId}"
+									th:classappend="*{#fields.hasErrors('attendanceList[' + __${st.index}__ + '].workingTypeId')} ? 'is-invalid'">
+									<option value=""></option>
 									<option th:each="wt: ${workingTypeList}"
 											th:value="${wt.workingTypeId}"
 											th:text="${wt.workingTypeName}"
 											th:selected="${wt.workingTypeId} == ${item.workingTypeId}">
 									</option>
 								</select>
+								<div class="invalid-feedback" th:errors="*{attendanceList[__${st.index}__].workingTypeId}"></div>
 							</td>
 							<!-- 開始時刻 -->
 							<td class="cs-form">

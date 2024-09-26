@@ -5,6 +5,7 @@ import java.util.Date;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 @Data
@@ -26,6 +27,7 @@ public class Attendance {
 	// 曜日名称
 	private String weekdayName;
 	// 勤務区分
+	@NotNull
 	private Integer workingTypeId;
 	// 勤務区分名称
 	private String workingTypeName;
