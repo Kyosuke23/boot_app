@@ -1,6 +1,8 @@
+/application.properties
 /com/
-/mybatis-config.xml
-/templates/
-/mapper/
-/static/
+/db/
 /il8n/
+/mapper/
+/mybatis-config.xml
+/static/
+/templates/

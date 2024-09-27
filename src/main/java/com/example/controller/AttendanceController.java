@@ -106,6 +106,13 @@ public class AttendanceController {
 		List<Attendance> attendanceList = form.getAttendanceList();
 		List<Attendance> insertList = new ArrayList<Attendance>(attendanceList);
 		
+		// HACK: しゃーなしの空白->null変換。MySQLのUPSERT文のcase/ifがおかしくなる。 
+		insertList.forEach(item -> {
+			if(item.getStartTime().isEmpty()) item.setStartTime(null);
+			if(item.getEndTime().isEmpty()) item.setEndTime(null);
+			if(item.getRestTime().isEmpty()) item.setRestTime(null);
+		});
+		
 		// 勤怠情報の登録
 		this.service.upsertAttendance(userId, attendanceYm, 0); // ヘッダー
 		this.service.upsertAttendanceDetail(userId, insertList); // 明細

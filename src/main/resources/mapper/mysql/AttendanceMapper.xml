@@ -86,19 +86,19 @@
 			#{attendanceYm}
 			, #{userId}
 		)
-        on duplicate key update
+		on duplicate key update
 			status = #{status}
-            , updated_at = current_timestamp();
+			, updated_at = current_timestamp();
 	</insert>
 	<insert id="upsertAttendanceDetail" parameterType="java.util.List">
 		insert into t_attendance_detail (
 			user_id
 			, attendance_date
 			, working_type_id
-            , start_time
-            , end_time
-            , rest_time
-            , checked_flg
+			, start_time
+			, end_time
+			, rest_time
+			, checked_flg
 		) values
 		<foreach collection="attendanceList" item="item" open="" separator="," close="">
 		(
@@ -109,16 +109,17 @@
 			, #{item.endTime}
 			, #{item.restTime}
 			, case when #{item.checkedFlg} then 1 else 0 end
-		) as new
+		)
 		</foreach>
+		as new
         on duplicate key update
-        	start_time = new.start_time
-        	, working_type_id = new.working_type_id
-        	, start_time = new.start_time
-        	, end_time = new.end_time
-        	, rest_time = new.rest_time
-        	, checked_flg = if(new.checked_flg, 1, 0)
-        	, updated_at = current_timestamp()
-        ;
+			user_id = new.user_id
+			, working_type_id = new.working_type_id
+			, start_time = new.start_time
+			, end_time = new.end_time
+			, rest_time = new.rest_time
+			, checked_flg = if(new.checked_flg, 1, 0)
+			, updated_at = current_timestamp()
+		;
 	</insert>
 </mapper>

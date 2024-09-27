@@ -24,6 +24,7 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layo
 							<th class="th-width" th:text="#{startTime}"></th>
 							<th class="th-width" th:text="#{endTime}"></th>
 							<th class="th-width" th:text="#{restTime}"></th>
+							<th class="th-width" th:text="#{workingTime}"></th>
 						</tr>
 					</thead>
 					<tbody>
@@ -43,7 +44,7 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layo
 							<td>
 								<select class="form-select" th:field="*{attendanceList[__${st.index}__].workingTypeId}"
 									th:classappend="*{#fields.hasErrors('attendanceList[' + __${st.index}__ + '].workingTypeId')} ? 'is-invalid'">
-									<option value=""></option>
+									<option value="0"></option>
 									<option th:each="wt: ${workingTypeList}"
 											th:value="${wt.workingTypeId}"
 											th:text="${wt.workingTypeName}"
@@ -76,6 +77,9 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layo
 									th:classappend="*{#fields.hasErrors('attendanceList[' + __${st.index}__ + '].restTime')} ? 'is-invalid'"
 								/>
 								<div class="invalid-feedback" th:errors="*{attendanceList[__${st.index}__].restTime}"></div>
+							</td>
+							<!-- 勤務時間 -->
+							<td class="cs-form">
 							</td>
 						</tr>
 					</tbody>

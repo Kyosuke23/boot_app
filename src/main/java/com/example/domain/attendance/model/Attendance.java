@@ -40,4 +40,6 @@ public class Attendance {
 	@NotBlank
 	// 休憩時間
 	private String restTime;
+	// 勤務時間
+	private String workingTime;
 }
