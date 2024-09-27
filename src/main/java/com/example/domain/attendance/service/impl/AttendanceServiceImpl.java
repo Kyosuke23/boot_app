@@ -59,15 +59,6 @@ public class AttendanceServiceImpl implements AttendanceService {
 	 * @param attendanceList 勤怠詳細情報リスト
 	 */
 	public void upsertAttendanceDetail(String userId, List<Attendance> attendanceList) {
-//		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-//		attendanceList.forEach(item -> {
-//			LocalDateTime startTime = item.getStartTime();
-//			LocalDateTime endTime = item.getEndTime();
-//			if(startTime != null && endTime != null) {
-//				item.setStartTimeStr(dtf.format(startTime));
-//				item.setEndTimeStr(dtf.format(endTime));
-//			}
-//		});
 		this.mapper.upsertAttendanceDetail(userId, attendanceList);
 	}
 }

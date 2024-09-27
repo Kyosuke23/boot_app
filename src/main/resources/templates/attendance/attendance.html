@@ -60,8 +60,8 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layo
 									th:value="${not #strings.isEmpty(item.startTime)} ? *{#strings.substring(attendanceList[__${st.index}__].startTime, 11, 16)}"
 								/>
 								<div class="invalid-feedback" th:errors="*{attendanceList[__${st.index}__].startTime}"></div>
+								<input type="hidden" class="start_time_hidden" th:field="*{attendanceList[__${st.index}__].startTime}"/>
 							</td>
-							<input type="hidden" class="start_time_hidden" th:field="*{attendanceList[__${st.index}__].startTime}"/>
 							<!-- 終了時刻 -->
 							<td class="cs-form">
 								<input type="time" class="form-control end_time" step="900"
@@ -69,8 +69,8 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layo
 									th:value="${not #strings.isEmpty(item.endTime)} ? *{#strings.substring(attendanceList[__${st.index}__].endTime, 11, 16)}"
 								/>
 								<div class="invalid-feedback" th:errors="*{attendanceList[__${st.index}__].endTime}"></div>
+								<input type="hidden" class="end_time_hidden" th:field="*{attendanceList[__${st.index}__].endTime}"/>
 							</td>
-							<input type="hidden" class="end_time_hidden" th:field="*{attendanceList[__${st.index}__].endTime}"/>
 							<!-- 休憩時間　-->
 							<td class="cs-form">
 								<input type="time" class="form-control rest_time" th:field="*{attendanceList[__${st.index}__].restTime}"
@@ -79,14 +79,15 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layo
 								<div class="invalid-feedback" th:errors="*{attendanceList[__${st.index}__].restTime}"></div>
 							</td>
 							<!-- 勤務時間 -->
-							<td class="cs-form">
-							</td>
+							<td class="cs-form working_time" th:text="${not #strings.isEmpty(item.workingTime)} ? *{#strings.substring(attendanceList[__${st.index}__].workingTime, 0, 5)}"></td>
 						</tr>
 					</tbody>
 				</table>
+				<!-- 保存ボタン -->
 				<div>
 					<input id="btn-save" type="submit" class="btn btn-primary mt-3 mb-5" th:value="#{btn.save}"/>
 				</div>
+				<!-- 勤務年月　-->
 				<input type="hidden" th:field="*{attendanceYm}"/>
 			</form>
 		</div>
